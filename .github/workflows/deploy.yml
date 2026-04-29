@@ -10,7 +10,7 @@ jobs:
       - uses: subosito/flutter-action@v2
         with:
           channel: 'stable'
-      - run: flutter build web --base-href /YOUR_REPO_NAME/
+      - run: flutter build web --base-href /drunk-test-demo/
       - name: Deploy
         uses: peaceiris/actions-gh-pages@v4
         with:
