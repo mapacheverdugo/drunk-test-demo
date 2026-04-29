@@ -35,124 +35,148 @@ class _DrunkTestExplanatoryPageState extends State<DrunkTestExplanatoryPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: ForestColors.darkForest,
-      body: SafeArea(
-        child: Container(
-          padding: const EdgeInsets.symmetric(
-            horizontal: ForestSpacing.spaceX3,
-            vertical: ForestSpacing.spaceY3,
-          ),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              const Spacer(),
-              const SizedBox(width: double.infinity),
-              SvgPicture.asset('assets/svg/traffic_light_both.svg'),
-              const SizedBox(height: ForestSpacing.spaceY7),
-              ForestText.textBodyM(
-                label: Strings.explanatoryTitle.toUpperCase(),
-                fontFamily: 'Mohr',
-                textAlign: TextAlign.center,
-                color: ForestColors.white,
-              ),
-              const SizedBox(height: ForestSpacing.spaceY1),
-              ForestRich(
-                textAlign: TextAlign.center,
-                textStyle: const TextStyle(
-                  fontSize: ForestTypography.textBodyM,
-                  color: ForestColors.white,
+      body: Column(
+        children: [
+          Expanded(
+            child: SingleChildScrollView(
+              child: SafeArea(
+                bottom: false,
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: ForestSpacing.spaceX3,
+                    vertical: ForestSpacing.spaceY3,
+                  ),
+                  child: Column(
+                    children: [
+                      const SizedBox(width: double.infinity),
+                      SvgPicture.asset('assets/svg/traffic_light_both.svg'),
+                      const SizedBox(height: ForestSpacing.spaceY7),
+                      ForestText.textBodyM(
+                        label: Strings.explanatoryTitle.toUpperCase(),
+                        fontFamily: 'Mohr',
+                        textAlign: TextAlign.center,
+                        color: ForestColors.white,
+                      ),
+                      const SizedBox(height: ForestSpacing.spaceY1),
+                      ForestRich(
+                        textAlign: TextAlign.center,
+                        textStyle: const TextStyle(
+                          fontSize: ForestTypography.textBodyM,
+                          color: ForestColors.white,
+                        ),
+                        text: '${Strings.explanatoryDescriptionLead}'
+                            'a1[${Strings.explanatoryDescriptionBold}]',
+                        params: [
+                          ForestRichModel(
+                            patternId: 'a1',
+                            color: ForestColors.white,
+                            textStyle: const TextStyle(
+                              fontWeight: FontWeight.w700,
+                            ),
+                          ),
+                        ],
+                      ),
+                      const SizedBox(height: ForestSpacing.spaceY3),
+                      RichText(
+                        textAlign: TextAlign.center,
+                        text: TextSpan(
+                          style: const TextStyle(
+                            fontFamily: 'GT',
+                            fontSize: ForestTypography.textBodyM,
+                            color: ForestColors.white,
+                          ),
+                          children: [
+                            const TextSpan(
+                              text: Strings.explanatoryDisclaimerText,
+                            ),
+                            TextSpan(
+                              text: Strings.explanatoryDisclaimerLink,
+                              style: const TextStyle(
+                                decoration: TextDecoration.underline,
+                              ),
+                              recognizer: TapGestureRecognizer()
+                                ..onTap = _onDisclaimerTapped,
+                            ),
+                            WidgetSpan(
+                              alignment: PlaceholderAlignment.middle,
+                              child: GestureDetector(
+                                onTap: _onDisclaimerTapped,
+                                child: Padding(
+                                  padding: const EdgeInsets.only(left: 6),
+                                  child: SvgPicture.asset(
+                                    'assets/svg/share.svg',
+                                    width: 12,
+                                    height: 12,
+                                    colorFilter: const ColorFilter.mode(
+                                      ForestColors.white,
+                                      BlendMode.srcIn,
+                                    ),
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                      const SizedBox(height: ForestSpacing.spaceY3),
+                      GestureDetector(
+                        onTap: () => setState(
+                          () => _disclaimerChecked = !_disclaimerChecked,
+                        ),
+                        child: Row(
+                          children: [
+                            CheckAtom(
+                              isChecked: _disclaimerChecked,
+                              onChanged: (value) =>
+                                  setState(() => _disclaimerChecked = value),
+                            ),
+                            const SizedBox(width: ForestSpacing.spaceX05),
+                            Flexible(
+                              child: ForestText.textBodyM(
+                                label: Strings.explanatoryCheckboxLabel,
+                                color: ForestColors.white,
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ],
+                  ),
                 ),
-                text: '${Strings.explanatoryDescriptionLead}'
-                    'a1[${Strings.explanatoryDescriptionBold}]',
-                params: [
-                  ForestRichModel(
-                    patternId: 'a1',
-                    color: ForestColors.white,
-                    textStyle: const TextStyle(fontWeight: FontWeight.w700),
+              ),
+            ),
+          ),
+          SafeArea(
+            top: false,
+            child: Padding(
+              padding: const EdgeInsets.fromLTRB(
+                ForestSpacing.spaceX3,
+                ForestSpacing.spaceY3,
+                ForestSpacing.spaceX3,
+                ForestSpacing.spaceY3,
+              ),
+              child: Column(
+                children: [
+                  ForestButton.primary(
+                    size: ForestButtonSize.lg,
+                    onPressed: _onStartPressed,
+                    enabled: _disclaimerChecked,
+                    expanded: true,
+                    label: Strings.explanatoryStartButton,
+                  ),
+                  const SizedBox(height: ForestSpacing.spaceY1),
+                  ForestButton.light(
+                    size: ForestButtonSize.lg,
+                    onPressed: () => Navigator.of(context).pop(),
+                    expanded: true,
+                    elevated: false,
+                    label: Strings.explanatoryGoBackButton,
                   ),
                 ],
               ),
-              const SizedBox(height: ForestSpacing.spaceY3),
-              RichText(
-                textAlign: TextAlign.center,
-                text: TextSpan(
-                  style: const TextStyle(
-                    fontFamily: 'GT',
-                    fontSize: ForestTypography.textBodyM,
-                    color: ForestColors.white,
-                  ),
-                  children: [
-                    const TextSpan(text: Strings.explanatoryDisclaimerText),
-                    TextSpan(
-                      text: Strings.explanatoryDisclaimerLink,
-                      style: const TextStyle(
-                        decoration: TextDecoration.underline,
-                      ),
-                      recognizer: TapGestureRecognizer()
-                        ..onTap = _onDisclaimerTapped,
-                    ),
-                    WidgetSpan(
-                      alignment: PlaceholderAlignment.middle,
-                      child: GestureDetector(
-                        onTap: _onDisclaimerTapped,
-                        child: Padding(
-                          padding: const EdgeInsets.only(left: 6),
-                          child: SvgPicture.asset(
-                            'assets/svg/share.svg',
-                            width: 12,
-                            height: 12,
-                            colorFilter: const ColorFilter.mode(
-                              ForestColors.white,
-                              BlendMode.srcIn,
-                            ),
-                          ),
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-              const SizedBox(height: ForestSpacing.spaceY3),
-              GestureDetector(
-                onTap: () => setState(
-                  () => _disclaimerChecked = !_disclaimerChecked,
-                ),
-                child: Row(
-                  children: [
-                    CheckAtom(
-                      isChecked: _disclaimerChecked,
-                      onChanged: (value) =>
-                          setState(() => _disclaimerChecked = value),
-                    ),
-                    const SizedBox(width: ForestSpacing.spaceX05),
-                    Flexible(
-                      child: ForestText.textBodyM(
-                        label: Strings.explanatoryCheckboxLabel,
-                        color: ForestColors.white,
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-              const SizedBox(height: ForestSpacing.spaceY3),
-              const Spacer(),
-              ForestButton.primary(
-                size: ForestButtonSize.lg,
-                onPressed: _onStartPressed,
-                enabled: _disclaimerChecked,
-                expanded: true,
-                label: Strings.explanatoryStartButton,
-              ),
-              const SizedBox(height: ForestSpacing.spaceY1),
-              ForestButton.light(
-                size: ForestButtonSize.lg,
-                onPressed: () => Navigator.of(context).pop(),
-                expanded: true,
-                elevated: false,
-                label: Strings.explanatoryGoBackButton,
-              ),
-            ],
+            ),
           ),
-        ),
+        ],
       ),
     );
   }
