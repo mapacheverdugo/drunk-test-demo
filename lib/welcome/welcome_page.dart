@@ -182,92 +182,119 @@ class _WelcomePageState extends State<WelcomePage> {
 
     return Scaffold(
       backgroundColor: ForestColors.iceCream,
-      body: SafeArea(
-        child: Stack(
-          children: [
-            Padding(
-              padding: const EdgeInsets.symmetric(
-                horizontal: ForestSpacing.spaceX3,
-                vertical: ForestSpacing.spaceY3,
+      body: Stack(
+        children: [
+          if (_initializing)
+            const Center(
+              child: CircularProgressIndicator(
+                color: ForestColors.darkForest,
               ),
-              child: _initializing
-                  ? const Center(
-                      child: CircularProgressIndicator(
-                        color: ForestColors.darkForest,
+            )
+          else
+            Column(
+              children: [
+                Expanded(
+                  child: SingleChildScrollView(
+                    child: SafeArea(
+                      bottom: false,
+                      child: Padding(
+                        padding: const EdgeInsets.symmetric(
+                          horizontal: ForestSpacing.spaceX3,
+                          vertical: ForestSpacing.spaceY3,
+                        ),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.stretch,
+                          children: [
+                            const SizedBox(height: ForestSpacing.spaceY7),
+                            Center(
+                              child: SvgPicture.asset(
+                                'assets/svg/traffic_light_both.svg',
+                                height: 140,
+                              ),
+                            ),
+                            const SizedBox(height: ForestSpacing.spaceY5),
+                            ForestText.textHeadingL(
+                              label: Strings.landingTitle.toUpperCase(),
+                              fontFamily: 'Mohr',
+                              textAlign: TextAlign.center,
+                              color: ForestColors.darkestForest,
+                            ),
+                            const SizedBox(height: ForestSpacing.spaceY1),
+                            ForestText.textBodyM(
+                              label: Strings.landingSubtitle,
+                              textAlign: TextAlign.center,
+                              color: ForestColors.mildBlack,
+                            ),
+                            const SizedBox(height: ForestSpacing.spaceY5),
+                            _NameField(
+                              controller: _nameController,
+                              locked: hasSession,
+                              onChanged: (_) => setState(() {}),
+                              onClearPressed:
+                                  hasSession ? _onClearNamePressed : null,
+                            ),
+                            if (hasSession) ...[
+                              const SizedBox(height: ForestSpacing.spaceY3),
+                              _ResultRow(
+                                label: Strings.welcomeLastResultLabel,
+                                result: _lastResult,
+                                rank: _lastRank,
+                              ),
+                              const SizedBox(height: ForestSpacing.spaceY1),
+                              _ResultRow(
+                                label: Strings.welcomePersonalRecordLabel,
+                                result: _personalBest,
+                                rank: _personalBestRank,
+                              ),
+                            ],
+                          ],
+                        ),
                       ),
-                    )
-                  : Column(
-                      crossAxisAlignment: CrossAxisAlignment.stretch,
-                      children: [
-                        const SizedBox(height: ForestSpacing.spaceY7),
-                        Center(
-                          child: SvgPicture.asset(
-                            'assets/svg/traffic_light_both.svg',
-                            height: 140,
-                          ),
-                        ),
-                        const SizedBox(height: ForestSpacing.spaceY5),
-                        ForestText.textHeadingL(
-                          label: Strings.landingTitle.toUpperCase(),
-                          fontFamily: 'Mohr',
-                          textAlign: TextAlign.center,
-                          color: ForestColors.darkestForest,
-                        ),
-                        const SizedBox(height: ForestSpacing.spaceY1),
-                        ForestText.textBodyM(
-                          label: Strings.landingSubtitle,
-                          textAlign: TextAlign.center,
-                          color: ForestColors.mildBlack,
-                        ),
-                        const SizedBox(height: ForestSpacing.spaceY5),
-                        _NameField(
-                          controller: _nameController,
-                          locked: hasSession,
-                          onChanged: (_) => setState(() {}),
-                          onClearPressed:
-                              hasSession ? _onClearNamePressed : null,
-                        ),
-                        if (hasSession) ...[
-                          const SizedBox(height: ForestSpacing.spaceY3),
-                          _ResultRow(
-                            label: Strings.welcomeLastResultLabel,
-                            result: _lastResult,
-                            rank: _lastRank,
-                          ),
-                          const SizedBox(height: ForestSpacing.spaceY1),
-                          _ResultRow(
-                            label: Strings.welcomePersonalRecordLabel,
-                            result: _personalBest,
-                            rank: _personalBestRank,
-                          ),
-                        ],
-                        const Spacer(),
-                        ForestButton.primary(
-                          size: ForestButtonSize.lg,
-                          label: Strings.landingButton,
-                          expanded: true,
-                          enabled: _canStart,
-                          isLoading: _busy,
-                          onPressed: _canStart ? _onStartPressed : null,
-                        ),
-                      ],
                     ),
+                  ),
+                ),
+                SafeArea(
+                  top: false,
+                  child: Padding(
+                    padding: const EdgeInsets.fromLTRB(
+                      ForestSpacing.spaceX3,
+                      ForestSpacing.spaceY3,
+                      ForestSpacing.spaceX3,
+                      ForestSpacing.spaceY3,
+                    ),
+                    child: ForestButton.primary(
+                      size: ForestButtonSize.lg,
+                      label: Strings.landingButton,
+                      expanded: true,
+                      enabled: _canStart,
+                      isLoading: _busy,
+                      onPressed: _canStart ? _onStartPressed : null,
+                    ),
+                  ),
+                ),
+              ],
             ),
-            Positioned(
-              top: ForestSpacing.spaceY1,
-              right: ForestSpacing.spaceX1,
-              child: IconButton(
-                onPressed: _openLeaderboard,
-                tooltip: Strings.leaderboardTitle,
-                icon: const Icon(
-                  Icons.emoji_events_rounded,
-                  color: ForestColors.darkestForest,
-                  size: 28,
+          SafeArea(
+            child: Align(
+              alignment: Alignment.topRight,
+              child: Padding(
+                padding: const EdgeInsets.only(
+                  top: ForestSpacing.spaceY1,
+                  right: ForestSpacing.spaceX1,
+                ),
+                child: IconButton(
+                  onPressed: _openLeaderboard,
+                  tooltip: Strings.leaderboardTitle,
+                  icon: const Icon(
+                    Icons.emoji_events_rounded,
+                    color: ForestColors.darkestForest,
+                    size: 28,
+                  ),
                 ),
               ),
             ),
-          ],
-        ),
+          ),
+        ],
       ),
     );
   }
