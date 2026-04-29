@@ -1,0 +1,9 @@
+analyzer:
+  exclude:
+    - lib/**.g.dart
+    - lib/**.inject.dart
+    - lib/**.inject.summary
+
+linter:
+  rules:
+    sort_pub_dependencies: false

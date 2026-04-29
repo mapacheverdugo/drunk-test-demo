@@ -1,0 +1,81 @@
+part of '../alert.dart';
+
+class _ForestAlertDefaultTwoButton extends ForestAlertInterface {
+  _ForestAlertDefaultTwoButton({
+    required super.alertType,
+    required super.borderRadius,
+    required super.padding,
+  }) : super(
+          alertColor: ForestColorsOld.colorForest100,
+          titleColor: ForestColorsOld.colorForest800,
+          borderWidth: 0,
+          hasButton: true,
+          buttonCounter: 2,
+          bottomBorderWidth: 0,
+        );
+}
+
+class ForestAlertDefaultTwoButton extends StatelessWidget {
+  const ForestAlertDefaultTwoButton({
+    required this.title,
+    required this.alertType,
+    super.key,
+    this.onTap,
+    this.borderRadius = 8,
+    this.padding = 16,
+    this.borderWidth = 1,
+    this.subtitle = '',
+    this.hasButton = true,
+    this.buttonCounter = 1,
+    this.bottomBorderWidth = 2,
+    this.onTapPrimaryButton,
+    this.onTapOutlineButton,
+    this.primaryButtonLabel = '',
+    this.outlineButtonLabel = '',
+    this.primaryIcon,
+    this.outlineIcon,
+    this.showOutlineIcon = false,
+    this.showPrimaryIcon = false,
+  });
+
+  final String title;
+  final AlertType alertType;
+  final VoidCallback? onTap;
+  final double borderRadius;
+  final double padding;
+  final double borderWidth;
+  final String subtitle;
+  final bool hasButton;
+  final int buttonCounter;
+  final double bottomBorderWidth;
+  final VoidCallback? onTapPrimaryButton;
+  final VoidCallback? onTapOutlineButton;
+  final String primaryButtonLabel;
+  final String outlineButtonLabel;
+  final String? primaryIcon;
+  final String? outlineIcon;
+  final bool showPrimaryIcon;
+  final bool showOutlineIcon;
+
+  @override
+  Widget build(BuildContext context) {
+    return _ForestAlertGeneric(
+      title: title,
+      onTap: onTap,
+      subtitle: subtitle,
+      onTapPrimaryButton: onTapPrimaryButton,
+      onTapOutlineButton: onTapOutlineButton,
+      primaryButtonLabel: primaryButtonLabel,
+      outlineButtonLabel: outlineButtonLabel,
+      primaryIcon: primaryIcon,
+      outlineIcon: outlineIcon,
+      showOutlineIcon: showOutlineIcon,
+      showPrimaryIcon: showPrimaryIcon,
+      alertInterface: _ForestAlertDefaultTwoButton(
+        alertType: alertType,
+        borderRadius: borderRadius,
+        padding: padding,
+      ),
+    );
+  }
+}
