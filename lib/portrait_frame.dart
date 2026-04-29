@@ -11,21 +11,17 @@ class PortraitFrame extends StatelessWidget {
   static const double _bezelRadius = 48;
   static const double _bezelPadding = 14;
 
+  // Material "compact" breakpoint: viewports up to this width are treated as
+  // phones and render full-screen — the device itself is the frame. Above
+  // this we render the simulated phone mockup centered on a dark backdrop.
+  static const double _phoneBreakpoint = 600;
+
   @override
   Widget build(BuildContext context) {
     return LayoutBuilder(
       builder: (context, constraints) {
-        final isMobileViewport =
-            constraints.maxWidth <= _frameWidth + 1 &&
-                constraints.maxHeight >= _frameHeight - 100;
-
-        if (isMobileViewport) {
-          return MediaQuery(
-            data: MediaQuery.of(context).copyWith(
-              size: Size(constraints.maxWidth, constraints.maxHeight),
-            ),
-            child: child,
-          );
+        if (constraints.maxWidth <= _phoneBreakpoint) {
+          return child;
         }
 
         final available = Size(
