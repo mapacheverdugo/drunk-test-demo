@@ -1,9 +1,0 @@
-export 'foundations/alert/alert_interface.dart';
-export 'foundations/borders/borders.dart';
-export 'foundations/button/button_size.dart';
-export 'foundations/colors/colors.dart';
-export 'foundations/colors/colors_interface.dart';
-export 'foundations/colors/forest_colors.dart';
-export 'foundations/spacing/spacing.dart';
-export 'foundations/typography/typography.dart';
-export 'foundations/typography/typography_interface.dart';
